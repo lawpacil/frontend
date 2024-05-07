@@ -4,10 +4,10 @@ export default async function Home() {
   const session = await auth();
 
   return (
-    <main className="container mx-auto h-screen flex flex-col gap-4 justify-center items-center">
+    <main className="container mx-auto h-96 flex flex-col gap-4 justify-center items-center">
       {session ? (
         <>
-          <div> Hello, {session.user.email || session.user.username}</div>
+          <div> Hello, {session.user.email ?? session.user.username}</div>
           <form
             action={async () => {
               "use server";
