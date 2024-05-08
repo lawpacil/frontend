@@ -1,29 +1,27 @@
-"use client";
+import { auth, signOut } from "@auth";
+import MainCalendar from "./calendar";
+import { redirect } from "next/navigation";
 
-import { useState } from "react";
-import { Calendar, Event, momentLocalizer, Views } from "react-big-calendar";
-import moment from "moment";
-
-const localizer = momentLocalizer(moment);
-
-export default function Home() {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [date, setDate] = useState<Date>(new Date());
-  const [view, setView] = useState<any>(Views.WEEK);
+export default async function Home() {
+  const session = await auth();
+  if (!session) redirect("/api/auth/signin");
 
   return (
-    <div>
-      <Calendar
-        localizer={localizer}
-        events={events}
-        defaultView="week"
-        timeslots={4}
-        step={15}
-        date={moment(date).toDate()}
-        view={view}
-        onNavigate={(date) => setDate(date)}
-        onView={(view) => setView(view)}
-      />
+    <div className="pt-24 container mx-auto flex flex-col gap-6">
+      <form
+        action={async () => {
+          "use server";
+          await signOut();
+        }}
+      >
+        <div className="text-2xl font-bold flex items-center gap-4">
+          <div>Welcome, {session.user.username ?? session.user.email}!</div>
+          <button className="btn btn-error btn-sm" type="submit">
+            Logout
+          </button>
+        </div>
+      </form>
+      <MainCalendar />
     </div>
   );
 }

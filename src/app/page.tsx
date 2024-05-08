@@ -1,36 +1,21 @@
-import { auth, signIn, signOut } from "@auth";
+import Link from "next/link";
 
 export default async function Home() {
-  const session = await auth();
-
   return (
-    <main className="container mx-auto h-96 flex flex-col gap-4 justify-center items-center">
-      {session ? (
-        <>
-          <div> Hello, {session.user.email ?? session.user.username}</div>
-          <form
-            action={async () => {
-              "use server";
-              await signOut();
-            }}
-          >
-            <button className="btn btn-error" type="submit">
-              Logout
-            </button>
-          </form>
-        </>
-      ) : (
-        <form
-          action={async () => {
-            "use server";
-            await signIn();
-          }}
-        >
-          <button className="btn btn-primary" type="submit">
-            Login
-          </button>
-        </form>
-      )}
+    <main>
+      <div className="hero min-h-screen bg-base-200">
+        <div className="hero-content text-center">
+          <div className="max-w-md">
+            <h1 className="text-5xl font-bold">Schedule App</h1>
+            <p className="py-6">
+              A simple scheduling app for groups and individuals.
+            </p>
+            <Link className="btn btn-primary" href="/home">
+              Get Started
+            </Link>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
