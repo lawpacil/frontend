@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="navbar bg-base-100 shadow fixed top-0">
+        <div className="navbar bg-base-100 shadow fixed top-0 z-50">
           <div className="flex-1">
             <Link href="/" className="btn btn-ghost text-xl">
               Schedule App
